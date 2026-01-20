@@ -1,0 +1,15 @@
+data/
+*.parquet
+*.csv
+*.jsonl
+
+logs/
+*.log
+
+.env
+*.env
+
+.venv/
+__pycache__/
+*.pyc
+*.pyo

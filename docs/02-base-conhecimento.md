@@ -33,56 +33,66 @@ Todos os dados estão em padrão extrangeiro então a inteligência artifical ir
 
 Existem duas possibilidades, injetar os dados diretamente no prompt (Ctrl + c, Ctrl + v) ou carregar os arquivos via código, como no exemplo abaixo:
 
-**Nota:** Crie um arquivo data_loader.py, dentro da pasta src e insira o código nele para cria uma classe Dataloader sendo mais fácil de ser manipulada.
+**Nota:** Crie um arquivo load_hf_datasets.py, dentro da pasta src e insira o código nele para cria uma classe Dataloader sendo mais fácil de ser manipulada.
 
 ```python
 import pandas as pd
-from pathlib import Path
 
-DATA_PATH = Path("data/raw")
+def load_credit_fraud_detection():
+    splits = {
+        "train": "data/train-00000-of-00001.parquet"
+    }
+    return pd.read_parquet(
+        "hf://datasets/rohan-chandrashekar/credit_fraud_detection/" + splits["train"]
+    )
 
+def load_credit_risk():
+    return pd.read_csv(
+        "hf://datasets/bongpheng/credit_risk_ds_100k/credit_risk_applicants_100k.csv"
+    )
 
-class DataLoader:
-    def __init__(self, base_path: Path = DATA_PATH):
-        self.base_path = base_path
+def load_personal_finance_parquet():
+    splits = {
+        "train": "data/train-00000-of-00001-0358029db0db7cde.parquet"
+    }
+    return pd.read_parquet(
+        "hf://datasets/danielv835/personal_finance_v0.2/" + splits["train"]
+    )
 
-    def load_parquet(self, filename: str) -> pd.DataFrame:
-        path = self.base_path / filename
-        return pd.read_parquet(path)
+def load_personal_finance_json():
+    return pd.read_json(
+        "hf://datasets/Akhil-Theerthala/PersonalFinance_v2/finance_cotr.jsonl",
+        lines=True
+    )
 
-    def load_csv(self, filename: str) -> pd.DataFrame:
-        path = self.base_path / filename
-        return pd.read_csv(path)
-
-    def load_jsonl(self, filename: str) -> pd.DataFrame:
-        path = self.base_path / filename
-        return pd.read_json(path, lines=True, encoding='utf-8')
-
-    def load_all(self) -> dict:
-        return {
-            "credit_fraud": self.load_parquet("credit_fraud_detection.parquet"),
-            "financial_fraud": self.load_csv("financial_fraud_detection.csv"),
-            "credit_risk": self.load_csv("credit_risk.csv"),
-            "personal_finance": self.load_parquet("personal_finance.parquet"),
-            "personal_profile": self.load_jsonl("personal_finance_json.jsonl"),
-        }
+def load_financial_fraud_detection():
+    return pd.read_csv(
+        "hf://datasets/rohan-chandrashekar/Financial_Fraud_Detection/New_Dataset.csv"
+    )
 
 ```
 
 ```python
-# Exemplo de como usar no projeto
+# Exemplo de como usar no projeto (Dentro o arquivo app.py)
 
-from src.data_loader import DataLoader
+# Basic Libs
+import pandas as pd
 
-loader = DataLoader()
-datasets = loader.load_all()
+# Modules
+from src.ingestion.load_hf_datasets import (
+    load_credit_fraud_detection,
+    load_credit_risk,
+    load_personal_finance_parquet,
+    load_personal_finance_json,
+    load_financial_fraud_detection
+)
 
-df_fraud = datasets["credit_fraud"]
-df_risk = datasets["credit_risk"]
-df_profile = datasets["personal_profile"]
-
-print(df_fraud.shape)
-print(df_risk.head())
+# ============  CARREGAR DADOS ============ #
+df_credit_fraud_detection_parquet = load_credit_fraud_detection()
+df_credit_risk_csv = load_credit_risk()
+df_personal_finance_parquet = load_personal_finance_parquet()
+df_personal_finance_json = load_personal_finance_json()
+df_financial_fraud_detection_csv = load_financial_fraud_detection()
 
 ```
 
@@ -165,11 +175,11 @@ Os dados são processados previamente para gerar indicadores de risco, classific
 
 > Mostre um exemplo de como os dados são formatados para o agente.
 
-O exemplo do contexto montado abaixo, se baseia nos dados originais da base de conhecimento, mas os siinteiza deixando apenas as informações mais relevantes, otimizando assim o consumo de tokens. Entretanto, vale lembrar que mais importante que econimizar tokens, é ter todas as informações relevantes disponiveis em seu contexto.
+O exemplo do contexto montado abaixo, se baseia nos dados originais da base de conhecimento, que será extraido diretamente do site `Hugging Face`, mas serão sintetizados deixando apenas as informações mais relevantes, otimizando assim o consumo de tokens. Entretanto, vale lembrar que mais importante que econimizar tokens, é ter todas as informações relevantes disponiveis em seu contexto.
 
 ## 1️⃣ Camada de Fraude Financeira
 ```text
-Origem: credit_fraud_detection.parquet
+Origem: df_credit_fraud_detection_parquet
 
 🔧 Dados brutos (internos)
 
@@ -200,7 +210,7 @@ Transaction Analysis:
 ## 2️⃣ Camada de Classificação de Fraude (Texto Interpretado)
 
 ```text
-Origem: df_cred_fraud_dec
+Origem: df_financial_fraud_detection_csv
 
 🔧 Dados brutos
 
@@ -224,7 +234,7 @@ Financial Risk Classification:
 ## 3️⃣ Camada de Risco de Crédito
 
 ```text
-Origem: credit_risk.csv
+Origem: df_credit_risk_csv
 
 ✅ Formato entregue ao agente (Brasil)
 Avaliação de Crédito:
@@ -243,8 +253,8 @@ Credit Risk Assessment:
 ```text
 Origem:
 
-personal_finance_json.jsonl
-personal_finance.parquet
+df_personal_finance_json
+df_personal_finance_parquet
 
 🔧 Dados usados
 

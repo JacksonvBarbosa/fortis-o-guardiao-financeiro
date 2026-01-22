@@ -1,4 +1,6 @@
+# Libs
 import pandas as pd
+import json
 
 def load_credit_fraud_detection():
     splits = {
@@ -31,3 +33,11 @@ def load_financial_fraud_detection():
     return pd.read_csv(
         "hf://datasets/rohan-chandrashekar/Financial_Fraud_Detection/New_Dataset.csv"
     )
+
+def carregar_dados_locais():
+    perfil_investidor = json.load(open("data/raw/perfil_investidor.json"))
+    transacoes = pd.read_csv("data/raw/transacoes.csv")
+    movimentacoes = pd.read_csv("data/raw/movimentacoes.csv")
+
+    return perfil_investidor, transacoes, movimentacoes
+

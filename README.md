@@ -1,149 +1,246 @@
-# 🤖 Agente Financeiro Inteligente com IA Generativa
+# 🛡️ Fortis — Agente Financeiro Inteligente com IA Generativa
 
-## Contexto
+## 📌 Visão Geral
 
-Os assistentes virtuais no setor financeiro estão evoluindo de simples chatbots reativos para **agentes inteligentes e proativos**. Neste desafio, você vai idealizar e prototipar um agente financeiro que utiliza IA Generativa para:
+O **Fortis** é um **Agente Financeiro Inteligente** projetado para atuar como um **Guardião Financeiro** — não como um consultor de investimentos.
 
-- **Antecipar necessidades** ao invés de apenas responder perguntas
-- **Personalizar** sugestões com base no contexto de cada cliente
-- **Cocriar soluções** financeiras de forma consultiva
-- **Garantir segurança** e confiabilidade nas respostas (anti-alucinação)
+Ele combina **análises estatísticas determinísticas** com **IA Generativa** para identificar riscos financeiros, interpretar comportamentos e orientar o usuário de forma **educativa, preventiva e segura**, evitando alucinações e decisões automatizadas.
 
-> [!TIP]
-> Na pasta [`examples/`](./examples/) você encontra referências de implementação para cada etapa deste desafio.
-
----
-
-## O Que Você Deve Entregar
-
-### 1. Documentação do Agente
-
-Defina **o que** seu agente faz e **como** ele funciona:
-
-- **Caso de Uso:** Qual problema financeiro ele resolve? (ex: consultoria de investimentos, planejamento de metas, alertas de gastos)
-- **Persona e Tom de Voz:** Como o agente se comporta e se comunica?
-- **Arquitetura:** Fluxo de dados e integração com a base de conhecimento
-- **Segurança:** Como evitar alucinações e garantir respostas confiáveis?
-
-📄 **Template:** [`docs/01-documentacao-agente.md`](./docs/01-documentacao-agente.md)
+O projeto foi desenvolvido com foco em:
+- Arquitetura moderna de agentes
+- Controle rigoroso de contexto
+- Separação entre lógica e geração de linguagem
+- Execução local de LLM (Ollama)
 
 ---
 
-### 2. Base de Conhecimento
+## 🎯 Caso de Uso
 
-Utilize os **dados mockados** disponíveis na pasta [`data/`](./data/) para alimentar seu agente:
+**Problema:**  
+Clientes frequentemente não percebem riscos em seu comportamento financeiro, como gastos excessivos, baixa reserva, instabilidade de fluxo ou possíveis sinais de fraude.
 
-| Arquivo | Formato | Descrição |
-|---------|---------|-----------|
-| `transacoes.csv` | CSV | Histórico de transações do cliente |
-| `historico_atendimento.csv` | CSV | Histórico de atendimentos anteriores |
-| `perfil_investidor.json` | JSON | Perfil e preferências do cliente |
-| `produtos_financeiros.json` | JSON | Produtos e serviços disponíveis |
+**Solução:**  
+O Fortis atua como um **guardião financeiro proativo**, analisando dados financeiros e explicando riscos e impactos de forma clara, sem realizar recomendações diretas de investimento.
 
-Você pode adaptar ou expandir esses dados conforme seu caso de uso.
-
-📄 **Template:** [`docs/02-base-conhecimento.md`](./docs/02-base-conhecimento.md)
-
----
-
-### 3. Prompts do Agente
-
-Documente os prompts que definem o comportamento do seu agente:
-
-- **System Prompt:** Instruções gerais de comportamento e restrições
-- **Exemplos de Interação:** Cenários de uso com entrada e saída esperada
-- **Tratamento de Edge Cases:** Como o agente lida com situações limite
-
-📄 **Template:** [`docs/03-prompts.md`](./docs/03-prompts.md)
+**Exemplos de atuação:**
+- Alerta de comprometimento excessivo da renda
+- Identificação de comportamento financeiro impulsivo
+- Sinais estatísticos de risco de fraude
+- Fragilidade da reserva de emergência
+- Orientação educativa antes de decisões financeiras relevantes
 
 ---
 
-### 4. Aplicação Funcional
+## 🧠 Arquitetura Geral
 
-Desenvolva um **protótipo funcional** do seu agente:
+O Fortis segue uma arquitetura **Agent-first**, com responsabilidades bem definidas:
 
-- Chatbot interativo (sugestão: Streamlit, Gradio ou similar)
-- Integração com LLM (via API ou modelo local)
-- Conexão com a base de conhecimento
-
-📁 **Pasta:** [`src/`](./src/)
-
----
-
-### 5. Avaliação e Métricas
-
-Descreva como você avalia a qualidade do seu agente:
-
-**Métricas Sugeridas:**
-- Precisão/assertividade das respostas
-- Taxa de respostas seguras (sem alucinações)
-- Coerência com o perfil do cliente
-
-📄 **Template:** [`docs/04-metricas.md`](./docs/04-metricas.md)
-
----
-
-### 6. Pitch
-
-Grave um **pitch de 3 minutos** (estilo elevador) apresentando:
-
-- Qual problema seu agente resolve?
-- Como ele funciona na prática?
-- Por que essa solução é inovadora?
-
-📄 **Template:** [`docs/05-pitch.md`](./docs/05-pitch.md)
-
----
-
-## Ferramentas Sugeridas
-
-Todas as ferramentas abaixo possuem versões gratuitas:
-
-| Categoria | Ferramentas |
-|-----------|-------------|
-| **LLMs** | [ChatGPT](https://chat.openai.com/), [Copilot](https://copilot.microsoft.com/), [Gemini](https://gemini.google.com/), [Claude](https://claude.ai/), [Ollama](https://ollama.ai/) |
-| **Desenvolvimento** | [Streamlit](https://streamlit.io/), [Gradio](https://www.gradio.app/), [Google Colab](https://colab.research.google.com/) |
-| **Orquestração** | [LangChain](https://www.langchain.com/), [LangFlow](https://www.langflow.org/), [CrewAI](https://www.crewai.com/) |
-| **Diagramas** | [Mermaid](https://mermaid.js.org/), [Draw.io](https://app.diagrams.net/), [Excalidraw](https://excalidraw.com/) |
-
----
-
-## Estrutura do Repositório
-
-```
-📁 lab-agente-financeiro/
-│
-├── 📄 README.md
-│
-├── 📁 data/                          # Dados mockados para o agente
-│   ├── historico_atendimento.csv     # Histórico de atendimentos (CSV)
-│   ├── perfil_investidor.json        # Perfil do cliente (JSON)
-│   ├── produtos_financeiros.json     # Produtos disponíveis (JSON)
-│   └── transacoes.csv                # Histórico de transações (CSV)
-│
-├── 📁 docs/                          # Documentação do projeto
-│   ├── 01-documentacao-agente.md     # Caso de uso e arquitetura
-│   ├── 02-base-conhecimento.md       # Estratégia de dados
-│   ├── 03-prompts.md                 # Engenharia de prompts
-│   ├── 04-metricas.md                # Avaliação e métricas
-│   └── 05-pitch.md                   # Roteiro do pitch
-│
-├── 📁 src/                           # Código da aplicação
-│   └── app.py                        # (exemplo de estrutura)
-│
-├── 📁 assets/                        # Imagens e diagramas
-│   └── ...
-│
-└── 📁 examples/                      # Referências e exemplos
-    └── README.md
+```mermaid
+flowchart LR
+    A[Dados Brutos] --> B[Risk Engine Estatístico]
+    B --> C[Context Builder]
+    C --> D[System Prompt]
+    D --> E[LLM Local - Ollama]
+    E --> F[Resposta ao Usuário]
 ```
 
+## 🧱 Componentes Principais
+
+| Camada | Responsabilidade |
+|------|------------------|
+| **Risk Engine** | Análises estatísticas determinísticas |
+| **Context Builder** | Síntese e normalização do contexto |
+| **System Prompt** | Persona, regras e limites do agente |
+| **LLM (Ollama)** | Geração de linguagem natural |
+| **Streamlit UI** | Interface e controle de fluxo |
+
 ---
 
-## Dicas Finais
+## 🧮 Risk Engine (Determinístico)
 
-1. **Comece pelo prompt:** Um bom system prompt é a base de um agente eficaz
-2. **Use os dados mockados:** Eles garantem consistência e evitam problemas com dados sensíveis
-3. **Foque na segurança:** No setor financeiro, evitar alucinações é crítico
-4. **Teste cenários reais:** Simule perguntas que um cliente faria de verdade
-5. **Seja direto no pitch:** 3 minutos passam rápido, vá ao ponto
+Toda a análise crítica ocorre **fora do LLM**, garantindo previsibilidade, rastreabilidade e segurança.
+
+### Módulos implementados (`src/risk_engine`)
+
+#### `fraud_detection.py`
+- Identifica valores fora do padrão
+- Detecta horários incomuns de transação
+- Aponta ocorrências de saldo negativo
+
+#### `credit_risk.py`
+- Avalia comprometimento da renda
+- Verifica suficiência da reserva de emergência
+
+#### `financial_profile.py`
+- Classifica o comportamento financeiro  
+  *(ex: controlado, moderado, impulsivo)*
+
+> 📌 **O LLM nunca recebe dados brutos**.  
+> Apenas os **resultados consolidados** dessas análises são enviados para geração de linguagem.
+
+---
+
+## 🧩 Context Builder
+
+O **Context Builder** (`src/agent/context_builder.py`) é responsável por:
+
+- Transformar análises estatísticas em linguagem estruturada
+- Garantir um contexto **fechado e controlado**
+- Reduzir uso de tokens e latência
+- Prevenir alucinações do modelo
+
+> O modelo recebe **somente dados sintetizados**, nunca históricos completos ou dados sensíveis.
+
+---
+
+## 🧠 System Prompt — Fortis
+
+O comportamento do agente é governado por um **System Prompt forte** (`src/agent/system_prompt.py`), que define:
+
+### Persona
+- **Guardião Financeiro**
+
+### Linguagem
+- Didática
+- Respeitosa
+- Preventiva
+
+### Proibições explícitas
+- ❌ Recomendações de investimento
+- ❌ Decisões financeiras diretas
+
+### Foco principal
+- Explicar riscos financeiros
+- Educar o usuário
+- Orientar de forma preventiva e consciente
+
+---
+
+## 🤖 Modelo de IA (LLM)
+
+### Escolha Técnica
+
+- **Modelo:** `mistral:7b`
+- **Execução:** Local via Ollama
+- **Endpoint:** `/api/generate`
+
+### Justificativa
+
+- Melhor aderência ao System Prompt
+- Menor tendência a improvisar conselhos
+- Mais previsível para agentes com regras rígidas
+- Adequado para ambientes financeiros regulados
+
+> Modelos *instruct* foram evitados por apresentarem maior risco de ignorar restrições de comportamento.
+
+---
+
+## 🔒 Segurança e Anti-Alucinação
+
+### Medidas adotadas
+
+- Lógica crítica executada fora do LLM
+- Contexto fechado e controlado
+- System Prompt com regras explícitas
+- Nenhum dado sensível ou histórico completo enviado ao modelo
+- Execução local (sem chamadas externas)
+
+### Variáveis de ambiente recomendadas
+
+```bash
+OLLAMA_MAX_LOADED_MODELS=1
+OLLAMA_NUM_PARALLEL=1
+OLLAMA_KEEP_ALIVE=5m
+
+## 🖥️ Interface (Streamlit)
+
+A aplicação utiliza **Streamlit** (`src/app/api.py`) para:
+
+- Seleção de investidor
+- Execução das análises financeiras
+- Visualização do contexto gerado
+- Interação controlada com o agente **Fortis**
+- Proteção contra múltiplas chamadas simultâneas ao modelo
+
+### Controles de Segurança da Interface
+
+A interface impede explicitamente:
+
+- Perguntas sem contexto previamente gerado
+- Chamadas concorrentes ao LLM
+- Envio duplicado de requisições durante processamento
+```
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+📁 dio-lab-bia-do-futuro/
+│
+├── README.md
+├── requirements.txt
+│
+├── assets/
+│
+├── data/
+│   ├── raw/
+│   │   ├── perfil_investidor.json
+│   │   ├── transacoes.csv
+│   │   └── movimentacoes.csv
+│   └── processed/
+│
+├── docs/
+│   ├── 01-documentacao-agente.md
+│   ├── 02-base-conhecimento.md
+│   ├── 03-prompts.md
+│   ├── 04-metricas.md
+│   └── 05-pitch.md
+│
+├── examples/
+│
+└── src/
+│   ├── app/
+│   │   └── api.py
+│   │
+│   ├── agent/
+│   │   ├── context_builder.py
+│   │   ├── system_prompt.py
+│   │   ├── ollama_agent.py
+│   │   ├── openai_agent.py
+│   │   └── hf_agent.py
+│   │
+│   ├── preprocessing/
+│   ├── ingestion/
+│   ├── llm/
+│   └── risk_engine/
+```
+
+## 📊 Avaliação e Métricas
+
+O agente **Fortis** é avaliado com base nos seguintes critérios:
+
+- Coerência com o perfil do investidor  
+- Aderência rigorosa ao **System Prompt**  
+- Ausência de alucinações  
+- Clareza e didatismo das respostas  
+- Consistência entre o risco identificado e a orientação fornecida  
+
+---
+
+## 🚀 Diferenciais do Projeto
+
+- ✔️ Arquitetura real de agente (não apenas chatbot)
+- ✔️ Separação clara entre lógica determinística e geração de linguagem
+- ✔️ Segurança por design
+- ✔️ Modelo local controlado
+- ✔️ Contexto minimalista e eficiente
+- ✔️ Pronto para escalar para múltiplos agentes especializados
+
+---
+
+## 🏁 Considerações Finais
+
+O **Fortis** demonstra como a IA Generativa pode ser aplicada de forma **responsável** no setor financeiro, atuando como **suporte cognitivo e educativo** — sem substituir decisões humanas.
+
+Este projeto serve como uma **base sólida para agentes financeiros de produção**, respeitando limites técnicos, legais e éticos.
+

@@ -1,15 +1,16 @@
 # Libs
 import requests
-from src.agent.system_prompt import SYSTEM_PROMPT, SYSTEM_PROMPT_01
-
+from src.agent.system_prompt import SYSTEM_PROMPT_02
 OLLAMA_URL = "http://localhost:11434/api/generate"
 #MODELO = "mistral:7b-instruct"  # modelo correto e confiável
-MODELO = "mistral:7b"  # modelo correto e confiável
+#MODELO = "mistral:7b"  # modelo correto e confiável
+#MODELO = "mistral"  # modelo correto e confiável
+MODELO = "phi3"  # modelo correto e confiável
 
 
 def perguntar_fortis_ollama(pergunta_usuario: str, contexto: str) -> str:
     prompt = f"""
-{SYSTEM_PROMPT_01}
+{SYSTEM_PROMPT_02}
 
 CONTEXTO DO CLIENTE:
 {contexto}

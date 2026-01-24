@@ -41,7 +41,9 @@ flowchart LR
     B --> C[Context Builder]
     C --> D[System Prompt]
     D --> E[LLM Local - Ollama]
+    D --> G[OPENAI - CHATBOT]
     E --> F[Resposta ao Usuário]
+    G --> F[Resposta ao Usuário]
 ```
 
 ## 🧱 Componentes Principais
@@ -52,6 +54,7 @@ flowchart LR
 | **Context Builder** | Síntese e normalização do contexto |
 | **System Prompt** | Persona, regras e limites do agente |
 | **LLM (Ollama)** | Geração de linguagem natural |
+| **LLM (OPENAI)** | Geração de linguagem natural |
 | **Streamlit UI** | Interface e controle de fluxo |
 
 ---
@@ -100,6 +103,9 @@ O comportamento do agente é governado por um **System Prompt forte** (`src/agen
 ### Persona
 - **Guardião Financeiro**
 
+### Nome
+- **Fortis**
+
 ### Linguagem
 - Didática
 - Respeitosa
@@ -123,6 +129,10 @@ O comportamento do agente é governado por um **System Prompt forte** (`src/agen
 - **Modelo:** `mistral:7b`
 - **Execução:** Local via Ollama
 - **Endpoint:** `/api/generate`
+---
+- **Modelo:** `Openai`
+- **Execução:** Cloud via Chatbot Openai
+- **Autenticação:** `API_KEY`
 
 ### Justificativa
 
@@ -131,7 +141,7 @@ O comportamento do agente é governado por um **System Prompt forte** (`src/agen
 - Mais previsível para agentes com regras rígidas
 - Adequado para ambientes financeiros regulados
 
-> Modelos *instruct* foram evitados por apresentarem maior risco de ignorar restrições de comportamento.
+> O modelo *Ollama instruct* foi evitado por apresentar maior risco de ignorar restrições de comportamento.
 
 ---
 
@@ -145,16 +155,20 @@ O comportamento do agente é governado por um **System Prompt forte** (`src/agen
 - Nenhum dado sensível ou histórico completo enviado ao modelo
 - Execução local (sem chamadas externas)
 
-### Variáveis de ambiente recomendadas
+### Variáveis de ambiente recomendadas para o LLM OLLAMA
 
 ```bash
-OLLAMA_MAX_LOADED_MODELS=1
-OLLAMA_NUM_PARALLEL=1
-OLLAMA_KEEP_ALIVE=5m
+# No PowerShell
+setx OLLAMA_MAX_LOADED_MODELS=1
+setx OLLAMA_NUM_PARALLEL=1
+setx OLLAMA_KEEP_ALIVE=5m
+
+# Para computador de 4 núcleo
+setx OLLAMA_NUM_THREADS 4
 
 ## 🖥️ Interface (Streamlit)
 
-A aplicação utiliza **Streamlit** (`src/app/api.py`) para:
+A aplicação utiliza **Streamlit** ('src/app/api.py' ou 'src/app/api_openai.py') para:
 
 - Seleção de investidor
 - Execução das análises financeiras
@@ -201,17 +215,19 @@ A interface impede explicitamente:
 └── src/
 │   ├── app/
 │   │   └── api.py
+|   |   |__ api_openai.py
+|   |   |__ api_pc_fraco.py
 │   │
 │   ├── agent/
 │   │   ├── context_builder.py
 │   │   ├── system_prompt.py
 │   │   ├── ollama_agent.py
+│   │   ├── ollama_agent_pc_fraco.py
 │   │   ├── openai_agent.py
-│   │   └── hf_agent.py
+│   │   
 │   │
 │   ├── preprocessing/
 │   ├── ingestion/
-│   ├── llm/
 │   └── risk_engine/
 ```
 

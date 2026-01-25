@@ -260,3 +260,6 @@ O **Fortis** demonstra como a IA Generativa pode ser aplicada de forma **respons
 
 Este projeto serve como uma **base sólida para agentes financeiros de produção**, respeitando limites técnicos, legais e éticos.
 
+## Tags:
+
+**Primeira versão estável:** v1.0.0
